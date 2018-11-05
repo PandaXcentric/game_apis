@@ -18,7 +18,7 @@ class OpenDota(API):
         base_url = "{}{}".format(self.rest_api, command)
 
         if self.key_id is not None:
-            base_url = "{}?api_key={}".format(base_url, val)
+            base_url = "{}?api_key={}".format(base_url, self.key_id)
 
         # loop over dictionary of options and add them as query parameters to the url
         # example: currencyPair=BTC_NXT&depth=10
