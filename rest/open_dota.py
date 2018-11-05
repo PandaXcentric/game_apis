@@ -4,6 +4,7 @@ from log import get_logger
 
 LOG = get_logger('rest', 'rest.log')
 
+# https://docs.opendota.com
 class OpenDota(API):
     '''
     OpenDota integrates with the OpenDota api.

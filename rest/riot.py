@@ -4,6 +4,7 @@ from log import get_logger
 
 LOG = get_logger('rest', 'rest.log')
 
+# https://developer.riotgames.com/api-methods/
 class Riot(API):
     ID = 'RIOT'
 
