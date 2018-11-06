@@ -202,9 +202,90 @@ class OpenDota(API):
     def get_pro_matches(self):
         return self._get('/proMatches')
 
+    def get_public_matches(self, parameters = None):
+        '''
+        mmr_ascending: integer, Order by MMR ascending
+        mmr_descending: integer, Order by MMR descending
+        less_than_match_id: integer, Get matches with a match ID lower than this value
+        '''
+        return self._get('/publicMatches', parameters)
+
     def get_match(self, match_id):
         '''
         Parameters:
             match_id: integer match id to get
         '''
         return self._get('/matches/{}'.format(match_id))
+
+    def search(self, query):
+        return self._get('/search', query)
+
+    def get_rankings(self, hero_id):
+        '''
+        Top players by hero
+        '''
+        return self._get('/rankings?hero_id={}'.format(hero_id))
+
+    def get_benchmarks(self, hero_id):
+        '''
+        Benchmarks of average stat values for a hero
+        '''
+        return self._get('/benchmarks?hero_id={}'.format(hero_id))
+
+    # api to get hero info
+    def get_heroes(self):
+        return self._get('/heroes')
+
+    def get_hero_matches(self, hero_id):
+        '''
+        Get recent matches with a hero
+        '''
+        return self._get('/heroes/{}/matches'.format(hero_id))
+
+    def get_hero_matchups(self, hero_id):
+        '''
+        Get results against other heroes for a hero
+        '''
+        return self._get('/heroes/{}/matchups'.format(hero_id))
+
+    def get_hero_performance_durations(self, hero_id):
+        '''
+        Get hero performance over a range of match durations
+        '''
+        return self._get('/heroes/{}/durations'.format(hero_id))
+
+    def get_hero_players(self, hero_id):
+        '''
+        Get players who have played this hero
+        '''
+        return self._get('/heroes/{}/players'.format(hero_id))
+
+    def get_hero_stats(self):
+        return self._get('/heroStats')
+
+    def get_leagues(self):
+        return self._get('/leagues')
+
+
+    # api to get team info
+    def get_teams(self):
+        return self._get('/teams')
+
+    def get_team_info(self, team_id):
+        return self._get('/teams/{}'.format(team_id))
+
+    def get_team_matches(self, team_id):
+        return self._get('/teams/{}/matches'.format(team_id))
+
+    def get_team_players(self, team_id):
+        return self._get('/teams/{}/players'.format(team_id))
+
+    def get_team_heroes(self, team_id):
+        return self._get('/teams/{}/heroes'.format(team_id))
+
+    def get_records(self, field):
+        return self._get('/records/{}'.format(field))
+
+
+    def get_live(self):
+        return self._get('/live')

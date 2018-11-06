@@ -106,6 +106,30 @@ class TestOpenDota(unittest.TestCase):
         wardmap = dota.get_player_wardmap(pro_players[0]['account_id'])
         assert 'obs' in wardmap
 
+    def test_get_benchmarks(self):
+        dota = Rest('config.yaml').OpenDota
+        benchmark = dota.get_benchmarks(2)
+        assert benchmark['hero_id'] == 2
+
+    def test_get_hero_matchups(self):
+        dota = Rest('config.yaml').OpenDota
+        matchups = dota.get_hero_matchups(2)
+
+        assert len(matchups) > 0
+
+    def test_get_teams(self):
+        dota = Rest('config.yaml').OpenDota
+        teams = dota.get_teams()
+        assert len(teams) > 0
+        assert 'team_id' in teams[0]
+
+
+    def test_get_team_matches(self):
+        dota = Rest('config.yaml').OpenDota
+        team = teams = dota.get_teams()[0]
+        matches = dota.get_team_matches(team['team_id'])
+        assert len(matches) > 0
+
 
 if __name__ == '__main__':
     unittest.main()
