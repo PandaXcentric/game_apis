@@ -40,6 +40,24 @@ class OpenDota(API):
 
         return resp.json()
 
+    def _post(self, command: str):
+        if options is None:
+            options = {}
+        base_url = "{}{}".format(self.rest_api, command)
+
+        if self.key_id is not None:
+            base_url = "{}?api_key={}".format(base_url, self.key_id)
+
+        resp = requests.post(base_url)
+
+        if resp.status_code != 200:
+            LOG.error("%s: Status code %d", self.ID, resp.status_code)
+            LOG.error("%s: Headers: %s", self.ID, resp.headers)
+            LOG.error("%s: Resp: %s", self.ID, resp.text)
+            resp.raise_for_status()
+
+        return resp.json()
+
 
     def get_live(self):
         '''
@@ -77,3 +95,116 @@ class OpenDota(API):
         if a scenario is passed, returns a list of win rate for each region
         '''
         return self._get('/scenarios/misc', parameters)
+
+    def get_pro_players(self):
+        return self._get('/proPlayers')
+
+    # api to get player info
+    def refresh_player(self, account_id):
+        return self._post('/players/{}/refresh'.format(account_id))
+
+    def _get_player(self, account_id, command = None, parameters = None):
+        call = '/players/{}'.format(account_id)
+        if command is not None:
+            call = '{}/{}'.format(call, command)
+
+        return self._get(call, parameters)
+
+    def get_player_info(self, account_id):
+        return self._get_player(account_id)
+
+    def get_player_wl(self, account_id):
+        return self._get_player(account_id, 'wl')
+
+    def get_player_recent_matches(self, account_id):
+        return self._get_player(account_id, 'recentMatches')
+
+    def get_player_matches(self, account_id, parameters = None):
+        '''
+        account_id: account to get the matches for
+        Parameters:
+            Accepted parameters can be found at https://docs.opendota.com/#tag/players%2Fpaths%2F~1players~1%7Baccount_id%7D~1matches%2Fget
+        '''
+        return self._get_player(account_id, 'matches', parameters)
+
+    def get_player_heroes(self, account_id, parameters = None):
+        '''
+        account_id: account to get the heroes for
+        Parameters:
+            Accepted parameters can be found at https://docs.opendota.com/#tag/players%2Fpaths%2F~1players~1%7Baccount_id%7D~1heroes%2Fget
+        '''
+        return self._get_player(account_id, 'heroes', parameters)
+
+    def get_player_peers(self, account_id, parameters = None):
+        '''
+        account_id: account to get the people played with for
+        Parameters:
+            Accepted parameters can be found at https://docs.opendota.com/#tag/players%2Fpaths%2F~1players~1%7Baccount_id%7D~1peers%2Fget
+        '''
+        return self._get_player(account_id, 'peers', parameters)
+
+    def get_pros_played_with(self, account_id, parameters = None):
+        '''
+        account_id: account to get the pros played with for
+        Parameters:
+            Accepted parameters can be found at https://docs.opendota.com/#tag/players%2Fpaths%2F~1players~1%7Baccount_id%7D~1pros%2Fget
+        '''
+        return self._get_player(account_id, 'pros', parameters)
+
+    def get_player_totals(self, account_id, parameters = None):
+        '''
+        account_id: account to get the totals for
+        Parameters:
+            Accepted parameters can be found at https://docs.opendota.com/#tag/players%2Fpaths%2F~1players~1%7Baccount_id%7D~1totals%2Fget
+        '''
+        return self._get_player(account_id, 'totals', parameters)
+
+    def get_player_counts(self, account_id, parameters = None):
+        '''
+        account_id: account to get the count for
+        Parameters:
+            Accepted parameters can be found at https://docs.opendota.com/#tag/players%2Fpaths%2F~1players~1%7Baccount_id%7D~1counts%2Fget
+        '''
+        return self._get_player(account_id, 'counts', parameters)
+
+    def get_player_histogram(self, account_id, field, parameters = None):
+        '''
+        account_id: account to get the histogram for
+        field: field to aggregate on
+        Parameters:
+            Accepted parameters can be found at https://docs.opendota.com/#tag/players%2Fpaths%2F~1players~1%7Baccount_id%7D~1histograms~1%7Bfield%7D%2Fget
+        '''
+        call = '/players/{}/histograms/{}'.format(account_id, field)
+        return self._get(call, parameters)
+
+    def get_player_wardmap(self, account_id, parameters = None):
+        '''
+        account_id: account to get the wardmap for
+        Parameters:
+            Accepted parameters can be found at https://docs.opendota.com/#tag/players%2Fpaths%2F~1players~1%7Baccount_id%7D~1wardmap%2Fget
+        '''
+        return self._get_player(account_id, 'wardmap', parameters)
+
+    def get_player_wordcloud(self, account_id, parameters = None):
+        '''
+        account_id: account to get the wardmap for
+        Parameters:
+            Accepted parameters can be found at https://docs.opendota.com/#tag/players%2Fpaths%2F~1players~1%7Baccount_id%7D~1wordcloud%2Fget
+        '''
+        return self._get_player(account_id, 'wordcloud')
+
+    def get_player_ratings(self, account_id):
+        return self._get_player(account_id, 'ratings')
+
+    def get_player_rankings(self, account_id):
+        return self._get_player(account_id, 'rankings')
+
+    def get_pro_matches(self):
+        return self._get('/proMatches')
+
+    def get_match(self, match_id):
+        '''
+        Parameters:
+            match_id: integer match id to get
+        '''
+        return self._get('/matches/{}'.format(match_id))

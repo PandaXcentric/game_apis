@@ -8,6 +8,7 @@ LOG = get_logger('rest', 'rest.log')
 class Pubg(API):
     ID = 'PUBG'
 
+    # potentially allow the region to be passed as an argument
     rest_api = 'https://api.pubg.com/shards/pc-na'
 
     def _get(self, command: str, options = None):

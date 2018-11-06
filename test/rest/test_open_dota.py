@@ -63,5 +63,49 @@ class TestOpenDota(unittest.TestCase):
 
         assert len(scenarios) > 0
 
+    def test_get_pro_players(self):
+        dota = Rest('config.yaml').OpenDota
+        pro_players = dota.get_pro_players()
+
+        assert len(pro_players) > 0
+        assert 'account_id' in pro_players[0]
+
+
+    def test_get_match(self):
+        dota = Rest('config.yaml').OpenDota
+        match_id = dota.get_pro_matches()[0]['match_id']
+        match = dota.get_match(match_id)
+
+        assert match_id == match['match_id']
+
+    def test_get_player_heroes(self):
+        dota = Rest('config.yaml').OpenDota
+        pro_players = dota.get_pro_players()
+        player_heroes = dota.get_player_heroes(pro_players[0]['account_id'])
+
+        assert len(player_heroes) > 0
+        assert 'hero_id' in player_heroes[0]
+
+    def test_get_player_heroes_parameters(self):
+        dota = Rest('config.yaml').OpenDota
+        pro_players = dota.get_pro_players()
+
+        parameters = {
+            'limit': 1,
+            'offset': 1,
+            'hero_id': 2
+        }
+
+        player_heroes = dota.get_player_heroes(pro_players[0]['account_id'], parameters)
+        assert player_heroes[0]['games'] <= 1
+
+
+    def test_get_player_wardmap(self):
+        dota = Rest('config.yaml').OpenDota
+        pro_players = dota.get_pro_players()
+        wardmap = dota.get_player_wardmap(pro_players[0]['account_id'])
+        assert 'obs' in wardmap
+
+
 if __name__ == '__main__':
     unittest.main()
