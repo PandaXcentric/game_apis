@@ -9,7 +9,7 @@ class Riot(API):
     ID = 'RIOT'
 
     # potentially allow the region to be passed as an argument
-    rest_api = "https://na1.api.riotgames.com/lol"
+    rest_api = "https://na1.api.riotgames.com"
 
     def _get(self, command: str, options = None):
         if options is None:
@@ -39,4 +39,45 @@ class Riot(API):
         return resp.json()
 
     def hello_world(self):
-        return self._get("/summoner/v3/summoners/by-name/RiotSchmick")
+        return self._get("/lol/summoner/v3/summoners/by-name/RiotSchmick")
+
+    def champion_masteries(self, summoner_id):
+        return self._get('/lol/champion-mastery/v3/champion-masteries/by-summoner/{}'.format(summoner_id))
+
+    def champoin_mastery(self, summoner_id, champoin_id):
+        return self._get('/lol/champion-mastery/v3/champion-masteries/by-summoner/{}/by-champion/{}'.format(summoner_id, champoin_id))
+
+    def champoin_mastery_score(self, summoner_id):
+        return self._get('/lol/champion-mastery/v3/scores/by-summoner/{}'.format(summoner_id))
+
+    def champoin_rotations(self):
+        return self._get('/lol/platform/v3/champion-rotations')
+
+    # api to get summoner information
+    def get_summoner_by_account(self, account_id):
+        return self._get('/lol/summoner/v3/summoners/by-account/{}'.format(account_id))
+
+    def get_summoner_by_name(self, summoner_name):
+        return self._get('/lol/summoner/v3/summoners/by-name/{}'.format(summoner_name))
+
+    def get_summoner_by_summoner_id(self, summoner_id):
+        return self._get('/lol/summoner/v3/summoners/{}'.format(summoner_id))
+
+    def get_matches_for_account(self, account_id, parameters = None):
+        return self._get('/lol/match/v3/matchlists/by-account/{}'.format(account_id), parameters)
+
+
+    def get_match_by_id(self, match_id):
+        return self._get('/lol/match/v3/matches/{}'.format(match_id))
+
+    def get_match_timeline(self, match_id):
+        return self._get('/lol/match/v3/timelines/by-match/{}'.format(match_id))
+
+    def get_match_ids_tournament(self, tournament_code):
+        return self._get(' /lol/match/v3/matches/by-tournament-code/{}/ids'.format(tournament_code))
+
+    def get_current_game_info(self, summoner_id):
+        return self._get('/lol/spectator/v3/active-games/by-summoner/{}'.format(summoner_id))
+
+    def get_featured_games(self):
+        return self._get('/lol/spectator/v3/featured-games')
