@@ -11,6 +11,7 @@ To run a specific unit test do:<br />
 # Using API
 Initialize the rest class with<br />
 ```api = Rest('<path to config.yaml>')```
+
 You can find the implemented apis with<br />
 ```api.lookup```
 
