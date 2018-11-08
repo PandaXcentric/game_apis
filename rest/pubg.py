@@ -50,3 +50,41 @@ class Pubg(API):
         The list is located in resp_data['data']['relationships']['matches']['data']
         '''
         return self._get('/samples', parameters)
+
+    def get_players(self, filter, players):
+        '''
+        filter: either playerIds or playerNames
+        players: list of string, pass either ids or names depending on the filter
+        '''
+        return self._get('/players?filter[{}]={}'.format(filter, ",".join(players)))
+
+    def get_player(self, account_id):
+        '''
+        account_id: account to get the info for
+        '''
+        return self._get('/players/{}'.format(account_id))
+
+    def get_seasons(self):
+        return self._get('/seasons')
+
+    def get_player_season(self, account_id, season_id):
+        return self._get('/players/{}/seasons/{}'.format(account_id, season_id))
+
+    def get_lifetime_stats(self, account_id):
+        return self._get('/players/{}/seasons/lifetime'.format(account_id))
+
+    def get_match(self, id):
+        return self._get('/matches/{}'.format(id))
+
+    def get_match_telemetry(self, id):
+        telemetry = None
+        match = self.get_match(id)
+        for info in match['included']:
+            if info['type'] == 'asset':
+                resp = requests.get(
+                    info['attributes']['URL'],
+                    headers = {'Accept': 'application/vnd.api+json', 'Accept-Encoding': 'gzip'}
+                )
+                telemetry = resp.json()
+
+        return telemetry
