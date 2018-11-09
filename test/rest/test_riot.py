@@ -19,15 +19,15 @@ class TestRiot(unittest.TestCase):
         assert len(champions) >= 0
 
 
-    def test_champoin_mastery_score(self):
+    def test_champion_mastery_score(self):
         riot = Rest('config.yaml').Riot
         summoner = riot.get_summoner_by_name('pandaxcentric')
-        mastery = riot.champoin_mastery_score(summoner['id'])
+        mastery = riot.champion_mastery_score(summoner['id'])
         assert mastery >= 0
 
-    def test_champoin_rotations(self):
+    def test_champion_rotations(self):
         riot = Rest('config.yaml').Riot
-        rotations = riot.champoin_rotations()
+        rotations = riot.champion_rotations()
 
         assert len(rotations['freeChampionIds']) > 0
 
