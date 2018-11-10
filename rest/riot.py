@@ -44,13 +44,13 @@ class Riot(API):
     def champion_masteries(self, summoner_id):
         return self._get('/lol/champion-mastery/v3/champion-masteries/by-summoner/{}'.format(summoner_id))
 
-    def champoin_mastery(self, summoner_id, champoin_id):
+    def champion_mastery(self, summoner_id, champoin_id):
         return self._get('/lol/champion-mastery/v3/champion-masteries/by-summoner/{}/by-champion/{}'.format(summoner_id, champoin_id))
 
-    def champoin_mastery_score(self, summoner_id):
+    def champion_mastery_score(self, summoner_id):
         return self._get('/lol/champion-mastery/v3/scores/by-summoner/{}'.format(summoner_id))
 
-    def champoin_rotations(self):
+    def champion_rotations(self):
         return self._get('/lol/platform/v3/champion-rotations')
 
     # api to get summoner information
