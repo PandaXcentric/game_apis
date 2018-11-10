@@ -4,3 +4,6 @@
 
 # ignore log files
 *.log
+
+# ignore secret files
+secret.yaml

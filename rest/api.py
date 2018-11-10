@@ -4,7 +4,7 @@ import yaml
 class API:
     ID = 'NONE'
 
-    def __init__(self, config, sandbox=False):
+    def __init__(self, config, sandbox=False, local_config=False):
         path = os.path.dirname(os.path.abspath(__file__))
         self.key_id, self.key_secret, self.key_passphrase = None, None, None
         self.sandbox = sandbox
@@ -12,7 +12,12 @@ class API:
             config = "config.yaml"
 
         try:
-            with open(os.path.join(path, config), 'r') as fp:
+            if local_config:
+                config_path = config
+            else:
+                config_path = os.path.join(path, config)
+
+            with open(config_path, 'r') as fp:
                 data = yaml.safe_load(fp)
                 self.key_id = data[self.ID.lower()]['key_id']
                 self.key_secret = data[self.ID.lower()]['key_secret']
