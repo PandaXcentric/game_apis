@@ -1,6 +1,12 @@
 # game_apis
 This repository is for integrating with different apis to allow you to pull player or game data
 
+# Install
+To install the api so it's importable do:<br />
+```sudo python3 setup.py install```<br /><br />
+Once it's installed you can do<br />
+```from game_apis.rest import Rest```
+
 # Run tests
 To run all unit tests in a file do:<br />
 ```python3 -m unittest test.rest.test_open_dota```
