@@ -7,3 +7,15 @@
 
 # ignore secret files
 secret.yaml
+config.yaml
+
+# compiled
+__pycache__/
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+lib/
+*.egg-info/
+*.egg

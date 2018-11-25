@@ -1,8 +1,8 @@
 import logging
 
-from rest.open_dota import OpenDota
-from rest.riot import Riot
-from rest.pubg import Pubg
+from game_apis.rest.open_dota import OpenDota
+from game_apis.rest.riot import Riot
+from game_apis.rest.pubg import Pubg
 
 class Rest:
     def __init__(self, config=None, sandbox=False, local_config=False):

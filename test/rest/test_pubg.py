@@ -1,8 +1,6 @@
 import unittest
 
-import rest
-from rest import rest
-from rest.rest import Rest
+from game_apis.rest import Rest
 
 class TestPubg(unittest.TestCase):
 

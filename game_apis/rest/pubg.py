@@ -1,6 +1,6 @@
 import requests
-from rest.api import API
-from log import get_logger
+from game_apis.rest.api import API
+from game_apis.log import get_logger
 
 LOG = get_logger('rest', 'rest.log')
 

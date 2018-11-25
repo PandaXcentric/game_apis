@@ -1,8 +1,6 @@
 import unittest
 
-import rest
-from rest import rest
-from rest.rest import Rest
+from game_apis.rest import Rest
 
 class TestOpenDota(unittest.TestCase):
 
@@ -35,8 +33,7 @@ class TestOpenDota(unittest.TestCase):
     def test_get_item_timings_both(self):
         dota = Rest('config.yaml').OpenDota
         scenarios = dota.get_item_timings({'hero_id': 120, 'item': 'ancient_janggo'})
-
-        assert len(scenarios) == 1
+        assert len(scenarios) > 1
 
     def test_get_lane_roles(self):
         dota = Rest('config.yaml').OpenDota
