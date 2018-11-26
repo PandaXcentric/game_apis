@@ -14,7 +14,13 @@ class Riot(API):
     def _get(self, command: str, options = None):
         if options is None:
             options = {}
-        base_url = "{}{}".format(self.rest_api, command)
+
+        if self.region is not None:
+            rest_api = "https://{}.api.riotgames.com".format(self.region)
+        else:
+            rest_api = self.rest_api
+
+        base_url = "{}{}".format(rest_api, command)
 
         if self.key_id is not None:
             base_url = "{}?api_key={}".format(base_url, self.key_id)

@@ -9,6 +9,11 @@ class TestRiot(unittest.TestCase):
         hello = riot.hello_world()
         assert hello['id'] == 585897
 
+    def test_region(self):
+        riot = Rest('config.yaml',region='oc1').Riot
+        hello = riot.hello_world()
+        assert hello['id'] == 651520
+
     def test_champion_masteries(self):
         riot = Rest('config.yaml').Riot
         summoner = riot.get_summoner_by_name('pandaxcentric')
