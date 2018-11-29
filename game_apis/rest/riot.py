@@ -20,7 +20,7 @@ class Riot(API):
         if options is None:
             options = {}
 
-        base_url = "{}{}".format(rest_api, command)
+        base_url = "{}{}".format(self.rest_api, command)
 
         if self.key_id is not None:
             base_url = "{}?api_key={}".format(base_url, self.key_id)
