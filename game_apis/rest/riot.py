@@ -8,17 +8,17 @@ LOG = get_logger('rest', 'rest.log')
 class Riot(API):
     ID = 'RIOT'
 
-    # potentially allow the region to be passed as an argument
-    rest_api = "https://na1.api.riotgames.com"
+    def __init__(self, config, region=None, sandbox=False, local_config=False):
+        super().__init__(config, sandbox, local_config)
+
+        if region == None:
+            region = 'na1'
+
+        self.rest_api = "https://{}.api.riotgames.com".format(region)
 
     def _get(self, command: str, options = None):
         if options is None:
             options = {}
-
-        if self.region is not None:
-            rest_api = "https://{}.api.riotgames.com".format(self.region)
-        else:
-            rest_api = self.rest_api
 
         base_url = "{}{}".format(rest_api, command)
 

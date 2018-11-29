@@ -9,10 +9,13 @@ class TestRiot(unittest.TestCase):
         hello = riot.hello_world()
         assert hello['id'] == 585897
 
-    def test_region(self):
-        riot = Rest('config.yaml',region='oc1').Riot
-        hello = riot.hello_world()
-        assert hello['id'] == 651520
+    def test_region_default(self):
+        riot = Rest('config.yaml').Riot
+        assert riot.rest_api == "https://na1.api.riotgames.com"
+
+    def test_region_different(self):
+        riot = Rest('config.yaml', region='test').Riot
+        assert riot.rest_api == "https://test.api.riotgames.com"
 
     def test_champion_masteries(self):
         riot = Rest('config.yaml').Riot

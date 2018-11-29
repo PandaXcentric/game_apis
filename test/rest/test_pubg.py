@@ -4,6 +4,14 @@ from game_apis.rest import Rest
 
 class TestPubg(unittest.TestCase):
 
+    def test_region_default(self):
+        pubg = Rest('config.yaml').Pubg
+        assert pubg.rest_api == 'https://api.pubg.com/shards/pc-na'
+
+    def test_region_different(self):
+        pubg = Rest('config.yaml', region='test').Pubg
+        assert pubg.rest_api == 'https://api.pubg.com/shards/test'
+
     def test_samples(self):
         pubg = Rest('config.yaml').Pubg
         samples = pubg.samples()
