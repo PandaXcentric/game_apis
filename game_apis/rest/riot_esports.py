@@ -11,6 +11,7 @@ class RiotEsports(API):
 
     lolsports_rest_api = 'https://api.lolesports.com/api'
     leagueoflegends_rest_api = 'https://acs.leagueoflegends.com'
+    ddragon_rest_api = 'https://ddragon.leagueoflegends.com'
 
     region_code_mapping = {
         'na-lcs': 'TRLH1',
@@ -36,6 +37,18 @@ class RiotEsports(API):
 
         return resp.json()
 
+    def _get_ddragon(self, uri):
+        ddragon_url = '{}{}'.format(self.ddragon_rest_api, uri)
+        resp = requests.get(ddragon_url)
+
+        if resp.status_code != 200:
+            LOG.error("%s: Status code %d", self.ID, resp.status_code)
+            LOG.error("%s: Headers: %s", self.ID, resp.headers)
+            LOG.error("%s: Resp: %s", self.ID, resp.text)
+            resp.raise_for_status()
+
+        return resp.json()
+
 
     def _get_leagueoflegends(self, uri):
         leagueoflegends_url = '{}{}'.format(self.leagueoflegends_rest_api, uri)
@@ -49,6 +62,21 @@ class RiotEsports(API):
 
         return resp.json()
 
+
+    def items(self):
+        return self._get_ddragon('/cdn/8.23.1/data/en_US/item.json')
+
+    def mastery(self):
+        return self._get_ddragon('/cdn/7.23.1/data/en_US/mastery.json')
+
+    def champions(self):
+        return self._get_ddragon('/cdn/8.23.1/data/en_US/champion.json')
+
+    def champion(self, champion_name):
+        return self._get_ddragon('/cdn/8.23.1/data/en_US/champion/{}.json'.format(champion_name))
+
+    def summoner(self):
+        return self._get_ddragon('/cdn/8.23.1/data/en_US/summoner.json')
 
     def leagues(self):
         '''

@@ -4,6 +4,36 @@ from game_apis.rest import Rest
 
 class TestRiotEsports(unittest.TestCase):
 
+    def test_items(self):
+        esports = Rest('config.yaml').RiotEsports
+        items = esports.items()
+
+        assert 'data' in items
+
+    def test_mastery(self):
+        esports = Rest('config.yaml').RiotEsports
+        mastery = esports.mastery()
+
+        assert 'data' in mastery
+
+    def test_champions(self):
+        esports = Rest('config.yaml').RiotEsports
+        champions = esports.champions()
+
+        assert 'data' in champions
+
+    def test_champion(self):
+        esports = Rest('config.yaml').RiotEsports
+        champion = esports.champion('Gnar')
+
+        assert 'data' in champion
+
+    def test_summoner(self):
+        esports = Rest('config.yaml').RiotEsports
+        summoner = esports.summoner()
+
+        assert 'data' in summoner
+
     def test_leagues(self):
         esports = Rest('config.yaml').RiotEsports
         leagues = esports.leagues()
