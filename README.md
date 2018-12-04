@@ -23,6 +23,8 @@ You can find the implemented apis with<br />
 
 An example usage of this repo is
 ```
+from game_apis.rest import Rest
+
 riot = Rest('config.yaml').Riot
 hello = riot.hello_world()
 ```
