@@ -1,4 +1,4 @@
-from data_flow import DataFlow
+from game_apis.data_flow import DataFlow
 from sqlalchemy import create_engine, event
 import yaml
 

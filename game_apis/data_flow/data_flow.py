@@ -10,7 +10,6 @@ class DataFlow:
         if not config:
             config = "config.yaml"
 
-
         if local_config:
             config_path = config
         else:
