@@ -2,8 +2,8 @@ from game_apis.data_flow import DataFlow
 from sqlalchemy import create_engine, event
 import yaml
 
-class DBFlow(DataFlow):
-    ID = 'DB_CREDS'
+class SQLFlow(DataFlow):
+    ID = 'SQL_CREDS'
 
     def __init__(self, config, sandbox=False, local_config=False):
         super().__init__(config, sandbox, local_config)
@@ -29,7 +29,7 @@ class DBFlow(DataFlow):
             )
 
 
-class PostgresDBFlow(DBFlow):
+class PostgresSQLFlow(SQLFlow):
     def __init__(self, config, sandbox=False, local_config=False):
         super().__init__(config, sandbox, local_config)
 
@@ -43,7 +43,7 @@ class PostgresDBFlow(DBFlow):
             )
         )
 
-class MSSQLDBFlow(DBFlow):
+class MSSQLFlow(SQLFlow):
     def __init__(self, config, sandbox=False, local_config=False):
         super().__init__(config, sandbox, local_config)
 
