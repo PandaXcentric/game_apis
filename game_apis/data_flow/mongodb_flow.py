@@ -31,3 +31,9 @@ class MongoDBFlow(DataFlow):
 
     def load(self, document):
         return self.collection.insert_one(document)
+
+    def check_and_load(self, filter, document):
+        item = self.collection.find_one(filter)
+
+        if item is None:
+            return self.load(document)
