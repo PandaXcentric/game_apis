@@ -14,9 +14,9 @@ class MongoDBFlow(DataFlow):
         self.db_name = self.config['db_name']
         self.collection_name = self.config['collection_name']
 
-        self.collection = init_collection()
+        self.collection = self.init_collection()
 
-    def init_collection():
+    def init_collection(self):
         uri = "mongodb://{0}:{1}@{2}/?ssl=true&replicaSet=globaldb".format(
             self.db_user,
             self.db_pass,
@@ -29,5 +29,11 @@ class MongoDBFlow(DataFlow):
         return db[self.collection_name]
 
 
-    def load(self, document):
+    def write(self, document):
         return self.collection.insert_one(document)
+
+    def check_and_write(self, filter, document):
+        item = self.collection.find_one(filter)
+
+        if item is None:
+            return self.write(document)
