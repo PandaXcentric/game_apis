@@ -39,3 +39,32 @@ class AzureBlobFlow(DataFlow):
         )
 
         return msg
+
+    def get_next_item(self, folder_name, delete_file_on_load=True):
+
+        blob_list = block_blob_service.list_blobs(
+            self.container,
+            folder_name
+        )
+
+        try:
+            blob_name = list(blob_list)[0].name
+            blob_text = block_blob_service.get_blob_to_text(
+                self.container,
+                blob_name
+            )
+
+            if delete_file_on_load:
+                self.delete(blob_name)
+
+            return blob_name, blob_text.content
+        except:
+            return None, None
+
+
+    def delete(self, file_name):
+
+        block_blob_service.delete_blob(
+            self.container,
+            file_name
+        )
