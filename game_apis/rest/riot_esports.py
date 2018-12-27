@@ -201,3 +201,46 @@ class RiotEsports(API):
                 game_hash
             )
         )
+
+
+    def games_for_team(self, league_slug, team_select_tuple, num_of_games=100):
+        '''
+        Parameters:
+            league_slug: the slug of the league you want to get the games from
+            team_select_tuple: the field of the team and the value (example: ('guid', 'be6c808b-d7aa-11e6-946a-02161d41e503'))
+
+        Return:
+            returns a list of games in the form [(league_slug, game['gameId'], game_id_mapping[game_id]), ...]
+        '''
+
+        info = self.league_info(league_slug)
+        info['highlanderTournaments'].reverse()
+
+        games = []
+        count = 0
+
+        for tournament in info['highlanderTournaments']:
+            tournament_id = tournament['id']
+            for bracket_id, bracket in tournament['brackets'].items():
+                for match_id, match in bracket['matches'].items():
+                    details = esports.match_details(tournament_id, match_id)
+
+                    team_matched = False
+                    for team in details['teams']:
+                        if team[team_select_tuple[0]].lower() == team_select_tuple[1]:
+                            team_matched = True
+
+                    if team_matched is True:
+                        game_id_mapping = {}
+                        for game_mapping in details['gameIdMappings']:
+                            game_id_mapping[game_mapping['id']] = game_mapping['gameHash']
+
+                        for game_id, game in match['games'].items():
+                            if 'gameId' in game:
+                                games.append((league_slug, game['gameId'], game_id_mapping[game_id]))
+                                count += 1
+
+                            if count >= num_of_games:
+                                return games
+
+        return games
