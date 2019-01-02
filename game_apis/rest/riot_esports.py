@@ -8,7 +8,6 @@ LOG = get_logger('rest', 'rest.log')
 
 class RiotEsports(API):
     ID = 'RIOTESPORTS'
-    LIMIT = 1 # adding the same limiter as riot to be safe.
 
     lolsports_rest_api = 'https://api.lolesports.com/api'
     leagueoflegends_rest_api = 'https://acs.leagueoflegends.com'
@@ -28,10 +27,7 @@ class RiotEsports(API):
 
     def _get_lolsports(self, uri):
         lolsports_url = '{}{}'.format(self.lolsports_rest_api, uri)
-
-        self.check_limiter()
         resp = requests.get(lolsports_url)
-        self.reset_limiter()
 
         if resp.status_code != 200:
             LOG.error("%s: Status code %d", self.ID, resp.status_code)
@@ -43,10 +39,7 @@ class RiotEsports(API):
 
     def _get_ddragon(self, uri):
         ddragon_url = '{}{}'.format(self.ddragon_rest_api, uri)
-
-        self.check_limiter()
         resp = requests.get(ddragon_url)
-        self.reset_limiter()
 
         if resp.status_code != 200:
             LOG.error("%s: Status code %d", self.ID, resp.status_code)
@@ -59,10 +52,7 @@ class RiotEsports(API):
 
     def _get_leagueoflegends(self, uri):
         leagueoflegends_url = '{}{}'.format(self.leagueoflegends_rest_api, uri)
-
-        self.check_limiter()
         resp = requests.get(leagueoflegends_url)
-        self.reset_limiter()
 
         if resp.status_code != 200:
             LOG.error("%s: Status code %d", self.ID, resp.status_code)

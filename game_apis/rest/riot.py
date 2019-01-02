@@ -7,16 +7,14 @@ LOG = get_logger('rest', 'rest.log')
 # https://developer.riotgames.com/api-methods/
 class Riot(API):
     ID = 'RIOT'
-    LIMIT = 1
 
-    def __init__(self, config, region=None, sandbox=False, local_config=False, ignore_limiter=False):
-        super().__init__(config, sandbox, local_config, ignore_limiter)
+    def __init__(self, config, region=None, sandbox=False, local_config=False):
+        super().__init__(config, sandbox, local_config)
 
         if region == None:
             region = 'na1'
 
         self.rest_api = "https://{}.api.riotgames.com".format(region)
-
 
     def _get(self, command: str, options = None):
         if options is None:
@@ -36,11 +34,7 @@ class Riot(API):
 
             base_url = "{}&{}={}".format(base_url, key, val)
 
-        self.check_limiter()
-
         resp = requests.get(base_url)
-
-        self.reset_limiter()
 
         if resp.status_code != 200:
             LOG.error("%s: Status code %d", self.ID, resp.status_code)
