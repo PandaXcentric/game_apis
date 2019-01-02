@@ -40,7 +40,7 @@ class API:
         cur_time = datetime.now()
         time_delta = (cur_time - self.ref_time).total_seconds()
 
-        if time_delta < self.LIMIT and self.ignore_limiter == False:
+        if time_delta < self.LIMIT and not self.ignore_limiter:
             sleep(self.LIMIT - time_delta)
 
     def reset_limiter(self):
