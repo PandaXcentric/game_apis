@@ -51,7 +51,9 @@ class OpenDota(API):
         if self.key_id is not None:
             base_url = "{}?api_key={}".format(base_url, self.key_id)
 
+        self.check_limiter()
         resp = requests.post(base_url)
+        self.reset_limiter()
 
         if resp.status_code != 200:
             LOG.error("%s: Status code %d", self.ID, resp.status_code)
