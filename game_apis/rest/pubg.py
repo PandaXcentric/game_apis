@@ -7,9 +7,10 @@ LOG = get_logger('rest', 'rest.log')
 # https://documentation.pubg.com/en/getting-started.html
 class Pubg(API):
     ID = 'PUBG'
+    LIMIT = 6 # rate limit of 10 requests per minute.
 
-    def __init__(self, config, region=None, sandbox=False, local_config=False):
-        super().__init__(config, sandbox, local_config)
+    def __init__(self, config, region=None, sandbox=False, local_config=False, ignore_limiter=False):
+        super().__init__(config, sandbox, local_config, ignore_limiter)
 
         if region == None:
             region = 'pc-na'
@@ -35,7 +36,9 @@ class Pubg(API):
 
             base_url = "{}&{}={}".format(base_url, key, val)
 
+        self.check_limiter()
         resp = requests.get(base_url, headers = headers)
+        self.reset_limiter()
 
         if resp.status_code != 200:
             LOG.error("%s: Status code %d", self.ID, resp.status_code)
