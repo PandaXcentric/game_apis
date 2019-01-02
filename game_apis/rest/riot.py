@@ -9,8 +9,8 @@ class Riot(API):
     ID = 'RIOT'
     LIMIT = 1
 
-    def __init__(self, config, region=None, sandbox=False, local_config=False):
-        super().__init__(config, sandbox, local_config)
+    def __init__(self, config, region=None, sandbox=False, local_config=False, ignore_limiter=False):
+        super().__init__(config, sandbox, local_config, ignore_limiter)
 
         if region == None:
             region = 'na1'
