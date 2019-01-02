@@ -1,21 +1,13 @@
 import os
 import yaml
-from datetime import datetime
-from time import sleep
 
 class API:
     ID = 'NONE'
-    LIMIT = 0
 
-    def __init__(self, config, sandbox=False, local_config=False, ignore_limiter = False):
+    def __init__(self, config, sandbox=False, local_config=False):
         path = os.path.dirname(os.path.abspath(__file__))
         self.key_id, self.key_secret, self.key_passphrase = None, None, None
         self.sandbox = sandbox
-
-        # for the rate limiter
-        self.ignore_limiter = ignore_limiter
-        self.ref_time = datetime(1900,1,1)
-
         if not config:
             config = "config.yaml"
 
@@ -34,14 +26,3 @@ class API:
                     self.key_passphrase = data[self.ID.lower()]['key_passphrase']
         except (KeyError, FileNotFoundError, TypeError):
             pass
-
-    def check_limiter(self):
-        # before we get the URL, let's check we are complying with the rate limiter.
-        cur_time = datetime.now()
-        time_delta = (cur_time - self.ref_time).total_seconds()
-
-        if time_delta < self.LIMIT and self.ignore_limiter == False:
-            sleep(self.LIMIT - time_delta)
-
-    def reset_limiter(self):
-        self.ref_time = datetime.now()
