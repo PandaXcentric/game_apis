@@ -26,6 +26,9 @@ class RiotEsports(API):
         'na-scouting-grounds': 'ESPORTSTMNT01'
     }
 
+    def __init__(self, config, region=None, sandbox=False, local_config=False, ignore_limiter=False):
+        super().__init__(config, sandbox, local_config, ignore_limiter)
+
     def _get_lolsports(self, uri):
         lolsports_url = '{}{}'.format(self.lolsports_rest_api, uri)
 
