@@ -10,6 +10,7 @@ class OpenDota(API):
     OpenDota integrates with the OpenDota api.
     '''
     ID = 'OPENDOTA'
+    LIMIT = 1 # 60 requests per minute.
 
     rest_api = "https://api.opendota.com/api"
 
@@ -30,7 +31,9 @@ class OpenDota(API):
 
             base_url = "{}&{}={}".format(base_url, key, val)
 
+        self.check_limiter()
         resp = requests.get(base_url)
+        self.reset_limiter()
 
         if resp.status_code != 200:
             LOG.error("%s: Status code %d", self.ID, resp.status_code)
@@ -48,7 +51,9 @@ class OpenDota(API):
         if self.key_id is not None:
             base_url = "{}?api_key={}".format(base_url, self.key_id)
 
+        self.check_limiter()
         resp = requests.post(base_url)
+        self.reset_limiter()
 
         if resp.status_code != 200:
             LOG.error("%s: Status code %d", self.ID, resp.status_code)

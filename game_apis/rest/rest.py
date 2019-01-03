@@ -6,13 +6,13 @@ from game_apis.rest.riot_esports import RiotEsports
 from game_apis.rest.pubg import Pubg
 
 class Rest:
-    def __init__(self, config=None, region=None, sandbox=False, local_config=False):
+    def __init__(self, config=None, region=None, sandbox=False, local_config=False, ignore_limiter=False):
         self.config = config
         self.lookup = {
-            'opendota': OpenDota(config,sandbox,local_config),
-            'riot': Riot(config,region,sandbox,local_config),
-            'riotesports': RiotEsports(config,sandbox,local_config),
-            'pubg': Pubg(config,region,sandbox,local_config)
+            'opendota': OpenDota(config,sandbox,local_config,ignore_limiter),
+            'riot': Riot(config,region,sandbox,local_config,ignore_limiter),
+            'riotesports': RiotEsports(config,sandbox,local_config,ignore_limiter),
+            'pubg': Pubg(config,region,sandbox,local_config,ignore_limiter)
         }
 
     def __getattr__(self, attr):
