@@ -49,7 +49,7 @@ class TestRiotEsports(unittest.TestCase):
 
     def test_get_games_in_timeframe(self):
         esports = Rest('config.yaml', ignore_limiter=True).RiotEsports
-        games = esports.get_games_in_timeframe('lck', 1499801019810, 1499801039810)
+        games = esports.get_games_in_timeframe('lck', 1460072397483, 1470072397483)
 
         assert len(games) > 0
         assert 'id' in games[0]

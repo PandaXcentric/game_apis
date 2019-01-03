@@ -115,15 +115,28 @@ class RiotEsports(API):
         games = []
 
         info = self.league_info(league_slug)
+
         for tournament in info['highlanderTournaments']:
+            tournament_id = tournament['id']
             for bracket_id, bracket in tournament['brackets'].items():
                 for match_id, match in bracket['matches'].items():
                     match_time = match['standings']['timestamp']
-                    if start_timestamp > match_time and match_time < end_timestamp:
+                    if start_timestamp < match_time and match_time < end_timestamp:
+                        details = self.match_details(tournament_id, match_id)
+
+                        game_id_mapping = {}
+                        for game_mapping in details['gameIdMappings']:
+                            game_id_mapping[game_mapping['id']] = game_mapping['gameHash']
+
                         for game_id, game in match['games'].items():
-                            game['tournament_id'] = tournament['id']
-                            game['match_id'] = match_id
-                            games.append(game)
+                            if 'gameId' in game:
+                                game['tournament_id'] = tournament['id']
+                                game['match_id'] = match_id
+                                game['game_hash'] = game_id_mapping[game_id]
+                                game['league'] = league_slug
+                                game['teams'] = details['teams']
+
+                                games.append(game)
 
         return games
 
@@ -233,7 +246,7 @@ class RiotEsports(API):
             tournament_id = tournament['id']
             for bracket_id, bracket in tournament['brackets'].items():
                 for match_id, match in bracket['matches'].items():
-                    details = esports.match_details(tournament_id, match_id)
+                    details = self.match_details(tournament_id, match_id)
 
                     team_matched = False
                     for team in details['teams']:
