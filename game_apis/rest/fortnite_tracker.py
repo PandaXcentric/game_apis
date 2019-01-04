@@ -43,7 +43,7 @@ class FortniteTracker(API):
         return resp.json()
 
 
-    def player_stats(self, platform, epic_nickname):
+    def get_player_stats(self, platform, epic_nickname):
         '''
         Parameters:
             platform: The platform you want fortnite player stats for. Current
@@ -56,7 +56,7 @@ class FortniteTracker(API):
 
         return self._get('/profile/{}/{}'.format(platform, epic_nickname))
 
-    def matches(self, account_id):
+    def get_matches(self, account_id):
         '''
         Parameters:
             account_id: The <accountId> parameter returned from the player_stats
