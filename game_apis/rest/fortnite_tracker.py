@@ -2,7 +2,7 @@ import requests
 from game_apis.rest.api import API
 from game_apis.log import get_logger
 
-# https://documentation.pubg.com/en/getting-started.html
+# https://fortnitetracker.com/site-api
 class FortniteTracker(API):
     ID = 'Fortnitetracker'
     LIMIT = 2
