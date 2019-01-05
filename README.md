@@ -22,11 +22,13 @@ egb:
   key_secret: null
 riotesports:
   key_id: null
-  ``` 
+fortnitetracker:
+  key_id: null
+  ```
 <br />
-  
+
   A good way to see what should be in the config is by looking at the base class that loads the config file and seeing what keys it expects. Normally it'll look for the ID of the child class, which is a field on that child class, and then have the parameters that class needs as children of it in the confg. <br />
-  
+
   The same thing is true for data_flow. You have the ID of the class lowercased (ID = 'AZUREBLOB_CREDS') and then as children of that in the config the fields it uses, for example self.config['account_name']. In this case you'd want:
 ```
   azureblob_creds:
