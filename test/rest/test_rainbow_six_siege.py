@@ -15,5 +15,4 @@ class TestRainbow6Siege(unittest.TestCase):
         r6s = Rest('config.yaml', ignore_limiter=True).Rainbow6Siege
         info = r6s.get_player_operators('barzY-YT', 'uplay')
 
-        print(info)
         assert len(info['operator_records']) > 0
