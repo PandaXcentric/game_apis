@@ -37,3 +37,8 @@ class MongoDBFlow(DataFlow):
 
         if item is None:
             return self.write(document)
+
+    def delete_and_write(self, filter, document):
+        item = self.collection.delete_many(filter)
+
+        return self.write(document)
