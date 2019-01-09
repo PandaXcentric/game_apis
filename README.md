@@ -29,9 +29,9 @@ fortnitetracker:
   ```
 <br />
  And an example of calling the api with a config file in the same directory as your project: <br />
-```
+ ```
 riot = Rest('config.yaml', local_config=True).Riot
-```
+   ```
 
   A good way to see what should be in the config is by looking at the base class that loads the config file and seeing what keys it expects. Normally it'll look for the ID of the child class, which is a field on that child class, and then have the parameters that class needs as children of it in the confg. <br />
 
