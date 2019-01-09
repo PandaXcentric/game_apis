@@ -29,6 +29,7 @@ fortnitetracker:
 ```
 <br />
  And an example of calling the api with a config file in the same directory as your project:<br />
+ 
 ```
 riot = Rest('config.yaml', local_config=True).Riot
 ```
