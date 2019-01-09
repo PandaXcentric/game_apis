@@ -2,13 +2,13 @@
 This repository is for integrating with different apis to allow you to pull player or game data
 
 # Install
-To install the api so it's importable do:<br />
-```sudo python3 setup.py install```<br /><br />
+You can install the api via pip via the command: <br />
+```sudo python3 -m pip install game_apis```<br /><br />
 Once it's installed you can do<br />
 ```from game_apis.rest import Rest```
 
 # Config
-To use some of the REST Apis you need your keys in the config.yaml file. The config file should be in the rest directory.<br />
+To use some of the REST Apis you need your keys in a config file (e.g. a file called config.yaml). You have the option of importing the config file locally with the local_config=True flag when instantiating an api, otherwise the path is relative to the directory where the api is installed. <br />
 Here's an example of the Rest Config:<br />
 ```
 opendota:
@@ -26,6 +26,10 @@ fortnitetracker:
   key_id: null
   ```
 <br />
+ And an example of calling the api with a config file in the same directory as your project: <br />
+ ```
+  riot = Rest('config.yaml', local_config=True).Riot
+ ```
 
   A good way to see what should be in the config is by looking at the base class that loads the config file and seeing what keys it expects. Normally it'll look for the ID of the child class, which is a field on that child class, and then have the parameters that class needs as children of it in the confg. <br />
 
