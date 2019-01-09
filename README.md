@@ -26,7 +26,7 @@ riotesports:
   key_id: null
 fortnitetracker:
   key_id: null
-  ```
+```
 <br />
  And an example of calling the api with a config file in the same directory as your project: <br />
 ```
