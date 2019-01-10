@@ -25,8 +25,21 @@ class TestPubg(unittest.TestCase):
 
         assert len(players['data']) > 0
 
+    def test_get_players_config_json(self):
+        config_json = {'pubg': {'key_id': '<hand enter key before running>'}}
+        pubg = Rest(config_json, ignore_limiter=True).Pubg
+        players = pubg.get_players('playerNames', ['shroud'])
+
+        assert len(players['data']) > 0
+
     def test_get_player(self):
         pubg = Rest('config.yaml', ignore_limiter=True).Pubg
+        player = pubg.get_player('account.d50fdc18fcad49c691d38466bed6f8fd')
+        assert player['data']['id'] == 'account.d50fdc18fcad49c691d38466bed6f8fd'
+
+    def test_get_player_config_json(self):
+        config_json = {'pubg': {'key_id': '<hand enter key before running>'}}
+        pubg = Rest(config_json, ignore_limiter=True).Pubg
         player = pubg.get_player('account.d50fdc18fcad49c691d38466bed6f8fd')
         assert player['data']['id'] == 'account.d50fdc18fcad49c691d38466bed6f8fd'
 

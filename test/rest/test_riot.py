@@ -23,9 +23,23 @@ class TestRiot(unittest.TestCase):
         champions = riot.champion_masteries(summoner['id'])
         assert len(champions) >= 0
 
+    def test_champion_masteries_json_config(self):
+        config_json = {'riot': {'key_id': '<hand enter key before running>'}}
+        riot = Rest(config_json, ignore_limiter=True).Riot
+        summoner = riot.get_summoner_by_name('pandaxcentric')
+        champions = riot.champion_masteries(summoner['id'])
+        assert len(champions) >= 0
+
 
     def test_champion_mastery_score(self):
         riot = Rest('config.yaml', ignore_limiter=True).Riot
+        summoner = riot.get_summoner_by_name('pandaxcentric')
+        mastery = riot.champion_mastery_score(summoner['id'])
+        assert mastery >= 0
+
+    def test_champion_mastery_score_json_config(self):
+        config_json = {'riot': {'key_id': '<hand enter key before running>'}}
+        riot = Rest(config_json, ignore_limiter=True).Riot
         summoner = riot.get_summoner_by_name('pandaxcentric')
         mastery = riot.champion_mastery_score(summoner['id'])
         assert mastery >= 0

@@ -19,19 +19,21 @@ class API:
         if not config:
             config = "config.yaml"
 
-        try:
+        if isinstance(config, dict):
+            data = config
+        else:
             if local_config:
                 config_path = config
             else:
                 config_path = os.path.join(path, config)
-
-            with open(config_path, 'r') as fp:
-                data = yaml.safe_load(fp)
-                self.key_id = data[self.ID.lower()]['key_id']
-                if 'key_secret' in data[self.ID.lower()]:
-                    self.key_secret = data[self.ID.lower()]['key_secret']
-                if 'key_passphrase' in data[self.ID.lower()]:
-                    self.key_passphrase = data[self.ID.lower()]['key_passphrase']
+                with open(config_path, 'r') as fp:
+                    data = yaml.safe_load(fp)
+        try:
+            self.key_id = data[self.ID.lower()]['key_id']
+            if 'key_secret' in data[self.ID.lower()]:
+                self.key_secret = data[self.ID.lower()]['key_secret']
+            if 'key_passphrase' in data[self.ID.lower()]:
+                self.key_passphrase = data[self.ID.lower()]['key_passphrase']
         except (KeyError, FileNotFoundError, TypeError):
             pass
 
