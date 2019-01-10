@@ -3,9 +3,9 @@ This repository is for integrating with different apis to allow you to pull play
 
 # Install
 You can install the api via pip via the command: <br />
-```sudo python3 -m pip install game_apis```<br /><br />
+```sudo python3 -m pip install game-apis```<br /><br />
 or if you are on windows: <br />
-```pip install game_apis```<br /><br />
+```pip install game-apis```<br /><br />
 Once it's installed you can do<br />
 ```from game_apis.rest import Rest```
 
