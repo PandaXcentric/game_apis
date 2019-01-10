@@ -10,6 +10,12 @@ Once it's installed you can do<br />
 ```from game_apis.rest import Rest```
 
 # Config
+There are 2 ways to do the config.  The preferred way is to read from a config.yaml file as described below. Another way to do it is to pass a json to the Rest class with the same structure as the config.yaml file described below.  Here's a simple example:<br />
+```
+config_json = {'riot': {'key_id': '<hand enter key before running>'}}
+riot = Rest(config_json).Riot
+```
+
 To use some of the REST Apis you need your keys in a config file (e.g. a file called config.yaml). You have the option of importing the config file locally with the local_config=True flag when instantiating an api, otherwise the path is relative to the directory where the api is installed. <br />
 Here's an example of the Rest Config:<br />
 ```
